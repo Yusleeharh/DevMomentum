@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevMomentum - Developer Discipline Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" class="app-root">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="close-sidebar" id="closeSidebar">✕</button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-link active" data-page="dashboard">
+                    📊 Dashboard
+                </a>
+                <a href="#focus" class="nav-link" data-page="focus">
+                    ⏱️ Focus Session
+                </a>
+                <a href="#tasks" class="nav-link" data-page="tasks">
+                    📋 Tasks
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="dark-mode-toggle" id="darkModeToggle">🌙 Dark Mode</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="app-header">
+                <button class="menu-button" id="menuButton">☰</button>
+                <h1 class="app-title">DevMomentum 🚀</h1>
+                <div class="header-spacer"></div>
+            </header>
+
+            <!-- Overlay for sidebar -->
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+            <!-- Pages Container -->
+            <main class="pages-container">
+                <!-- Dashboard Page -->
+                <div id="dashboard" class="page active">
+                    <div class="page-content">
+                        <!-- Greeting -->
+                        <div class="greeting-card">
+                            <p class="greeting-text" id="greetingText">Good Morning ☀️</p>
+                            <p class="greeting-time" id="greetingTime">10:45 AM</p>
+                        </div>
+
+                        <!-- Streak Card -->
+                        <div class="streak-card">
+                            <p class="streak-label">Current Streak</p>
+                            <div class="streak-display">
+                                <span class="streak-number" id="streakCounter">0</span>
+                                <span class="streak-icon">🔥</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" id="codedTodayBtn">I coded today ✅</button>
+                            <button class="btn btn-secondary" id="openCodeBtn">Open Code 💻</button>
+                        </div>
+
+                        <!-- Stats Card -->
+                        <div class="stats-card">
+                            <div class="stat-item">
+                                <span class="stat-label">Focus Time</span>
+                                <span class="stat-value" id="focusTimeDisplay">0</span>
+                                <span class="stat-unit">mins</span>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <span class="stat-label">Sessions</span>
+                                <span class="stat-value" id="sessionsDisplay">0</span>
+                                <span class="stat-unit">today</span>
+                            </div>
+                        </div>
+
+                        <!-- Last Updated -->
+                        <p class="last-updated" id="lastUpdated">No activity yet today</p>
+                    </div>
+                </div>
+
+                <!-- Focus Mode Page -->
+                <div id="focus" class="page">
+                    <div class="page-content">
+                        <!-- Timer Display -->
+                        <div class="timer-container">
+                            <div class="timer-display" id="timerDisplay">25:00</div>
+                            <p class="timer-label" id="timerLabel">Focus Time</p>
+                        </div>
+
+                        <!-- Control Buttons -->
+                        <div class="timer-controls">
+                            <button class="btn btn-control btn-start" id="startBtn">Start</button>
+                            <button class="btn btn-control btn-pause" id="pauseBtn" style="display: none;">Pause</button>
+                            <button class="btn btn-control btn-reset" id="resetBtn">Reset</button>
+                        </div>
+
+                        <!-- Focus Stats -->
+                        <div class="focus-stats">
+                            <div class="focus-stat">
+                                <span class="stat-icon">✅</span>
+                                <span class="stat-title">Tasks Completed</span>
+                                <span class="stat-number" id="tasksCompletedDisplay">0</span>
+                            </div>
+                            <div class="focus-stat">
+                                <span class="stat-icon">⏱️</span>
+                                <span class="stat-title">Focus Sessions</span>
+                                <span class="stat-number" id="focusSessionsDisplay">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Break Indicator -->
+                        <div class="break-indicator" id="breakIndicator" style="display: none;">
+                            <p class="break-text">Break Time! 🎉</p>
+                            <p class="break-time" id="breakTime">5:00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Page -->
+                <div id="tasks" class="page">
+                    <div class="page-content">
+                        <!-- Progress Section -->
+                        <div class="progress-section">
+                            <p class="progress-text" id="progressText">0 / 0 Tasks Completed</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="progressBar"></div>
+                            </div>
+                        </div>
+
+                        <!-- Tasks List -->
+                        <div class="tasks-list" id="tasksList">
+                            <p class="no-tasks">No tasks yet. Add one to get started!</p>
+                        </div>
+
+                        <!-- Add Task Input -->
+                        <div class="add-task-section">
+                            <input type="text" id="taskInput" class="task-input" placeholder="Add a new task...">
+                            <button class="btn btn-add-task" id="addTaskBtn">Add Task</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Modal for editing task -->
+    <div class="modal" id="editModal" style="display: none;">
+        <div class="modal-content">
+            <h2>Edit Task</h2>
+            <input type="text" id="editTaskInput" class="task-input">
+            <div class="modal-buttons">
+                <button class="btn btn-primary" id="saveEditBtn">Save</button>
+                <button class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
